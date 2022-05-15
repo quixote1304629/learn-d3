@@ -1,0 +1,137 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>公文</title>
+    <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+    <script
+      src="https://printjs-4de6.kxcdn.com/print.min.js"
+      charset="utf-8"
+    ></script>
+    <script src="./textContent.js" charset="utf-8"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://printjs-4de6.kxcdn.com/print.min.css"
+    />
+  </head>
+
+  <style>
+    .paper {
+      overflow: hidden;
+      display: inline-block;
+    }
+  </style>
+
+  <body>
+    <div class="app">
+      <div>
+        <button onclick="onPrint()">打印</button>
+      </div>
+      <div id="paper" class="paper"></div>
+    </div>
+
+    <script>
+      function onPrint() {
+        printJS({
+          printable: "paper",
+          type: "html",
+          targetStyles: ["*"],
+          maxWidth: 800,
+          style: "@page {margin:0;padding:0};",
+          // PrintJS 的这个参数确实是带下划线
+          font_size: " ",
+        });
+      }
+
+      /** 切割文字内容 */
+      function splitText(textContent = "", options) {
+        // 行文字数组
+        const rows = [];
+        // 文字区最大width
+        const maxWidth = options.width - options.padding * 2;
+        // 当前行开始位置
+        let curStart = 0;
+        // 当前行长度
+        let curLen = 0;
+        let i = 0;
+        while (i < textContent.length) {
+          const charCode = textContent.charCodeAt(i);
+          const pixelLen =
+            charCode > 255 ? options.fontSize : Math.ceil(options.fontSize / 2);
+          curLen += pixelLen;
+          if (curLen > maxWidth) {
+            rows.push(textContent.substring(curStart, i));
+            curStart = i;
+            curLen = 0;
+            continue;
+          }
+          if (i === textContent.length - 1) {
+            rows.push(textContent.substring(curStart, textContent.length));
+            break;
+          }
+          i++;
+        }
+
+        return rows;
+      }
+
+      function render(textContent = "", options) {
+        // 行文字
+        const rows = splitText(textContent, options);
+        // 每页行数
+        const pageRowNumber = Math.floor(
+          (options.height - options.padding * 2) /
+            (options.fontSize * options.lineHeight)
+        );
+        // 页数
+        const pageNumber = Math.ceil(rows.length / pageRowNumber);
+        const svgWidth = options.width;
+        const svgHeight = pageNumber * options.height;
+
+        const svg = d3
+          .select(options.parentName)
+          .append("svg")
+          .attr("class", "svg")
+          .attr("width", svgWidth)
+          .attr("height", svgHeight);
+
+        for (let i = 0; i < pageNumber; i++) {
+          const text = svg
+            .append("text")
+            .attr("x", options.padding)
+            //  有坑，感觉打印预览时候不是1.414：1， 处理不好咯
+            .attr("y", i * options.height + options.padding -  (i>0?0:5) + i*11)
+            .style("font-size", options.fontSize)
+            .style("font-family", options.fontFamily);
+
+          text
+            .selectAll("tspan")
+            .data(rows.slice(i * pageRowNumber, (i + 1) * pageRowNumber))
+            .enter()
+            .append("tspan")
+            .attr("x", text.attr("x"))
+            .attr("dy", `${options.lineHeight}em`)
+            .text((s) => s);
+        }
+
+        console.log('pageRowNumber', pageRowNumber);
+        console.log('rows.length', rows.length);
+        console.log('pageNumber', pageNumber);
+        console.log('svgHeight', svgHeight);
+      }
+
+      const options = {
+        parentName: ".paper",
+        width: 800,
+        height: 800 * 1.41421356,
+        fontSize: 20,
+        lineHeight: 1,
+        padding: 0,
+        // spacing: 30,
+        fontFamily: "simsun",
+      };
+
+      render(textContent, options);
+    </script>
+  </body>
+</html>
