@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>文字换行</title>
+    <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+  </head>
+
+  <body>
+    <div class="app">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1"
+        height="600"
+        width="600"
+      >
+        <!-- q相对位置 -->
+        <path
+          d="M 200 200 q 200 10 220 40 q 20 30 220 40"
+          fill="none"
+          stroke="blue"
+          stroke-miterlimit="10"
+          pointer-events="stroke"
+          stroke-width="2"
+        ></path>
+
+        <!-- Q绝对位置 -->
+        <path
+          transform="translate(0,-190)"
+          d="M 200 400 Q 400 410 420 440 Q 440 470 640 480"
+          fill="none"
+          stroke="blue"
+          stroke-miterlimit="10"
+          pointer-events="stroke"
+          stroke-width="2"
+        ></path>
+
+        <path
+          fill="none"
+          cursor="pointer"
+          stroke="#C2C8D5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+          d="M 425 261 L 425 265 C 425 664 190 457 190 856 L 190 860"
+        ></path>
+      </svg>
+    </div>
+  </body>
+</html>
