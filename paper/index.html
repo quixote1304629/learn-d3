@@ -100,7 +100,7 @@
             .append("text")
             .attr("x", options.padding)
             //  有坑，感觉打印预览时候不是1.414：1， 处理不好咯
-            .attr("y", i * options.height + options.padding -  (i>0?0:5) + i*11)
+            .attr("y", i * options.height + options.padding -  (i>0?0:0))
             .style("font-size", options.fontSize)
             .style("font-family", options.fontFamily);
 
@@ -120,10 +120,12 @@
         console.log('svgHeight', svgHeight);
       }
 
+      const a = 900
       const options = {
         parentName: ".paper",
-        width: 800,
-        height: 800 * 1.41421356,
+        width: a,
+        // width * 1.414213562373095
+        height: a * 1.414213562373095,
         fontSize: 20,
         lineHeight: 1,
         padding: 0,
