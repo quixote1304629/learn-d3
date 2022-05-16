@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>test</title>
+    <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+  </head>
+
+  <style>
+    .app {
+      /* padding: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center; */
+    }
+
+    .node {
+      position: relative;
+      width: 60px;
+      height: 60px;
+      border: 1px red solid;
+    }
+  </style>
+
+  <body>
+    <div class="app">
+      <div class="node"></div>
+      <div class="node"></div>
+    </div>
+
+    <script>
+      function draged() {
+        const { x, y } = d3.event;
+        console.log("aaa", x, y, d3.event);
+        d3.select(this).style("left", `${x}px`).style("top", `${y}px`);
+      }
+
+      d3.selectAll(".node").call(
+        d3
+          .drag()
+          .on("start", () => {
+            return { aaaa: 11 };
+          })
+          .on("end", () => {})
+          .on("drag", draged)
+      );
+
+      const ele = document.querySelector(".node");
+      // debugger;
+    </script>
+  </body>
+</html>

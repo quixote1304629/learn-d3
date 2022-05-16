@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>test</title>
+    <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+  </head>
+
+  <style>
+    .app {
+      padding: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+
+  <body>
+    <div class="app"></div>
+
+    <script>
+      var svg = d3
+        .select(".app")
+        .append("svg")
+        .attr("width", 300)
+        .attr("height", 300);
+
+      svg
+        .append("line")
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", 100)
+        .attr("y2", 100)
+        .style("stroke", "red");
+
+      const fontSize = 40;
+
+      const text = svg
+        .append("text")
+        .attr("x", 0)
+        .attr("y", 0)
+        .style("font-size", fontSize)
+        .style("text-anchor", "start")
+        .style("font-family", "simsun")
+        .attr("dy", '1em')
+        .text("AAAA")
+        .fill("red");
+
+      // const text = svg
+      //   .append("text")
+      //   .attr("x", 0)
+      //   .attr("y", 0)
+      //   .style("font-size", fontSize)
+      //   .style("font-family", "simsun");
+
+      // text
+      //   .selectAll("tspan")
+      //   .data(["AAAAAAA", "AAAAAAA", "AAAAAAA"])
+      //   .enter()
+      //   .append("tspan")
+      //   .attr("x", text.attr("x"))
+      //   .attr("dy", '1em')
+      //   .text((s) => s);
+    </script>
+  </body>
+</html>
