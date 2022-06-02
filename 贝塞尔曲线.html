@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>文字换行</title>
+    <title>贝塞尔曲线</title>
     <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
   </head>
 
@@ -10,8 +10,8 @@
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
-        height="600"
-        width="600"
+        width="1200"
+        height="900"
       >
         <!-- q相对位置 -->
         <path
@@ -34,14 +34,28 @@
           stroke-width="2"
         ></path>
 
+        <!-- C 三次贝塞尔曲线 绝对位置-->
+        <!-- https://developer.mozilla.org/zh-CN/docs/Web/SVG/Tutorial/Paths -->
         <path
           fill="none"
-          cursor="pointer"
-          stroke="#C2C8D5"
-          stroke-linecap="round"
+          pointer-events="none"
           stroke-linejoin="round"
+          stroke="#C2C8D5"
           stroke-width="1"
-          d="M 425 261 L 425 265 C 425 664 190 457 190 856 L 190 860"
+          d="M 220 60 C 220 172 380 109 380 221"
+          stroke-dasharray=""
+          style=""
+        ></path>
+
+        <path
+          fill="none"
+          pointer-events="none"
+          stroke-linejoin="round"
+          stroke="#C2C8D5"
+          stroke-width="1"
+          d="M 425 265 C 425 591 590 420 590 746"
+          stroke-dasharray=""
+          style=""
         ></path>
       </svg>
     </div>
