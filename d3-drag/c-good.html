@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+      const width = 600;
+      const height = 600;
+      const radius = 32;
+
+      const svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+      const circles = d3.range(6).map((i) => ({
+        x: Math.random() * (width - radius * 2) + radius,
+        y: Math.random() * (height - radius * 2) + radius,
+      }));
+
+      svg
+        .selectAll("circle")
+        .data(circles)
+        .join("circle")
+        .attr("cx", (d) => d.x)
+        .attr("cy", (d) => d.y)
+        .attr("r", radius)
+        .attr("fill", (d, i) => d3.schemeCategory10[i % 10])
+        .call(
+          d3.drag().on("drag", function dragged(event, d) {
+            console.log(event, d);
+            d3.select(this)
+              .attr("cx", (d.x = event.x))
+              .attr("cy", (d.y = event.y));
+          })
+        );
+    </script>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+      const width = 200;
+      const height = 200;
+      const svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+      svg
+        .selectAll("circle")
+        .data([{id: 'AAA'}])
+        .join("circle")
+        .attr("r", 40)
+        .attr("fill", "red")
+        .attr("cx", 100)
+        .attr("cy", 100)
+        .call(
+          d3
+            .drag()
+            .subject((event, d) => {
+              if(!d.x || !d.y) {
+                d.x = 100
+                d.y = 100
+              }
+              return d
+            })
+            // .on("start", function start(event, d) {
+            // console.log(event, d);
+            // })
+            .on("drag", function dragged(event, d) {
+              console.log(2, event, d);
+              d3.select(this)
+                .attr("cx", (d.x = event.x))
+                .attr("cy", (d.y = event.y));
+            })
+        );
+    </script>
+  </body>
+</html>
