@@ -19,27 +19,17 @@
 
       svg
         .selectAll("circle")
-        .data([{id: 'AAA'}])
+        .data([{id: 'AAA', x:100, y:100}])
         .join("circle")
         .attr("r", 40)
         .attr("fill", "red")
-        .attr("cx", 100)
-        .attr("cy", 100)
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
         .call(
           d3
             .drag()
-            .subject((event, d) => {
-              if(!d.x || !d.y) {
-                d.x = 100
-                d.y = 100
-              }
-              return d
-            })
-            // .on("start", function start(event, d) {
-            // console.log(event, d);
-            // })
             .on("drag", function dragged(event, d) {
-              console.log(2, event, d);
+              console.log(2, event, d, event.subject === d);
               d3.select(this)
                 .attr("cx", (d.x = event.x))
                 .attr("cy", (d.y = event.y));
