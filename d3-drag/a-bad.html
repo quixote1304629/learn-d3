@@ -39,6 +39,9 @@
       d3.selectAll(".node").call(
         d3
           .drag()
+          .subject(function() {
+            return 1;
+          })
           .on("start", function start() {
             const { left, top } = this.style;
             const leftVal = left ? left.substring(0, left.length - 2) * 1 : 0;
